@@ -52,6 +52,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.ai.configureAppCheck
 import com.example.ui.components.BackendConfigDialog
 import com.example.ui.components.HqActionBanner
 import com.example.ui.components.JdmcSplashOverlay
@@ -62,6 +63,7 @@ import com.example.ui.screens.ClubHubScreen
 import com.example.ui.screens.ClubSubTab
 import com.example.ui.screens.DashboardQuickDestination
 import com.example.ui.screens.DashboardScreen
+import com.example.ui.screens.JdmcAiAssistantScreen
 import com.example.ui.screens.MediaGalleryScreen
 import com.example.ui.screens.NewsEventsScreen
 import com.example.ui.screens.NewsSubTab
@@ -70,6 +72,7 @@ import com.example.ui.theme.JdmcGunmetal
 import com.example.ui.theme.JdmcHqTheme
 import com.example.ui.theme.JdmcLightYellow
 import com.example.ui.theme.JdmcObsidianBlack
+import com.example.ui.viewmodel.JdmcAiViewModel
 import com.example.ui.viewmodel.JdmcClipperViewModel
 import com.example.ui.viewmodel.JdmcHqViewModel
 
@@ -114,6 +117,7 @@ enum class JdmcMainTab(
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        configureAppCheck(this, intent)
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.dark(JdmcObsidianBlack.toArgb()),
             navigationBarStyle = SystemBarStyle.dark(JdmcCarbonSurface.toArgb())
@@ -129,18 +133,23 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun JdmcDigitalHqRootApp(
     hqViewModel: JdmcHqViewModel = viewModel(),
-    clipperViewModel: JdmcClipperViewModel = viewModel()
+    clipperViewModel: JdmcClipperViewModel = viewModel(),
+    aiViewModel: JdmcAiViewModel = viewModel()
 ) {
     val hqState by hqViewModel.uiState.collectAsStateWithLifecycle()
     val clockState by hqViewModel.clockState.collectAsStateWithLifecycle()
     val clipperState by clipperViewModel.uiState.collectAsStateWithLifecycle()
     val filteredClips by clipperViewModel.filteredPublishedClips.collectAsStateWithLifecycle()
+    val aiUiState by aiViewModel.uiState.collectAsStateWithLifecycle()
+    val aiMessages by aiViewModel.messages.collectAsStateWithLifecycle()
+    val aiSelectedImage by aiViewModel.selectedImageUri.collectAsStateWithLifecycle()
 
     var currentTab by rememberSaveable { mutableStateOf(JdmcMainTab.HOME) }
     var clubSubTab by rememberSaveable { mutableStateOf(ClubSubTab.MEMBERS) }
     var newsSubTab by rememberSaveable { mutableStateOf(NewsSubTab.ANNOUNCEMENTS) }
     var clipperSubTab by rememberSaveable { mutableStateOf(ClipperHubSubTab.PUBLIC_CLIPS) }
     var showBackendDialog by remember { mutableStateOf(false) }
+    var showAiAssistant by rememberSaveable { mutableStateOf(false) }
 
     val navigateQuick: (DashboardQuickDestination) -> Unit = { destination ->
         when (destination) {
@@ -175,6 +184,9 @@ fun JdmcDigitalHqRootApp(
                 clipperSubTab = ClipperHubSubTab.ADMIN_PANEL
                 currentTab = JdmcMainTab.CLIPPER
             }
+            DashboardQuickDestination.ROAD_AI -> {
+                showAiAssistant = true
+            }
         }
     }
 
@@ -208,7 +220,8 @@ fun JdmcDigitalHqRootApp(
                 topBar = {
                     JdmcTopHeaderBar(
                         backendStatus = clipperState.backendStatus,
-                        onConfigureBackendClick = { showBackendDialog = true }
+                        onConfigureBackendClick = { showBackendDialog = true },
+                        onOpenAiClick = { showAiAssistant = true }
                     )
                 },
                 bottomBar = {
@@ -398,6 +411,18 @@ fun JdmcDigitalHqRootApp(
                     }
                 }
             }
+        }
+
+        if (showAiAssistant) {
+            JdmcAiAssistantScreen(
+                uiState = aiUiState,
+                messages = aiMessages,
+                selectedImageUri = aiSelectedImage,
+                onSelectImage = aiViewModel::setSelectedImage,
+                onSendPrompt = aiViewModel::sendPrompt,
+                onResetChat = aiViewModel::clearConversation,
+                onClose = { showAiAssistant = false }
+            )
         }
 
         JdmcSplashOverlay(

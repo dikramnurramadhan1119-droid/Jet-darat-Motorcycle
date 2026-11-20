@@ -24,6 +24,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Announcement
 import androidx.compose.material.icons.filled.AccountTree
 import androidx.compose.material.icons.filled.AdminPanelSettings
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Collections
 import androidx.compose.material.icons.filled.Groups
@@ -79,7 +80,8 @@ enum class DashboardQuickDestination {
     EVENTS,
     MEDIA,
     CLIPPER_ROOM,
-    ADMIN_PANEL
+    ADMIN_PANEL,
+    ROAD_AI
 }
 
 @Composable
@@ -307,6 +309,50 @@ fun DashboardScreen(
                                 item = item,
                                 onClick = { onQuickNavigate(item.destination) },
                                 modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
+                }
+                Surface(
+                    color = JdmcGoldContainer,
+                    shape = RoundedCornerShape(14.dp),
+                    border = BorderStroke(1.dp, JdmcLightYellow),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(14.dp))
+                        .clickable { onQuickNavigate(DashboardQuickDestination.ROAD_AI) }
+                        .testTag("quick_nav_road_ai")
+                ) {
+                    Row(
+                        modifier = Modifier.padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Surface(
+                            color = JdmcObsidianBlack,
+                            shape = RoundedCornerShape(10.dp),
+                            border = BorderStroke(1.dp, JdmcGoldBorder)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.AutoAwesome,
+                                contentDescription = "JDMC Road AI",
+                                tint = JdmcLightYellow,
+                                modifier = Modifier
+                                    .padding(10.dp)
+                                    .size(20.dp)
+                            )
+                        }
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = "JDMC ROAD AI • GEMINI CONCIERGE",
+                                style = MaterialTheme.typography.titleSmall,
+                                color = JdmcLightYellow,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                text = "Draft announcements, plan Los Santos convoys & analyze bike photos",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = JdmcMetallicSilver
                             )
                         }
                     }

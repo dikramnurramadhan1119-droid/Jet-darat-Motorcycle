@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.LockClock
@@ -75,6 +76,7 @@ import com.example.util.VideoUrlHelper
 fun JdmcTopHeaderBar(
     backendStatus: BackendStatus,
     onConfigureBackendClick: () -> Unit,
+    onOpenAiClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -126,10 +128,44 @@ fun JdmcTopHeaderBar(
                     }
                 }
 
-                BackendStatusPill(
-                    status = backendStatus,
-                    onClick = onConfigureBackendClick
-                )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Surface(
+                        color = JdmcGoldContainer,
+                        shape = RoundedCornerShape(999.dp),
+                        border = BorderStroke(1.dp, JdmcLightYellow),
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(999.dp))
+                            .clickable(onClick = onOpenAiClick)
+                            .testTag("open_jdmc_ai_button")
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(5.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.AutoAwesome,
+                                contentDescription = "Open JDMC Road AI",
+                                tint = JdmcLightYellow,
+                                modifier = Modifier.size(14.dp)
+                            )
+                            Text(
+                                text = "AI",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = JdmcLightYellow,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    }
+
+                    BackendStatusPill(
+                        status = backendStatus,
+                        onClick = onConfigureBackendClick
+                    )
+                }
             }
             Box(
                 modifier = Modifier
