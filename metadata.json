@@ -1,0 +1,6 @@
+{
+  "name": "JDMC Digital HQ",
+  "description": "Official Jet Darat Motorcycle Club (JDMC) mobile headquarters featuring club dashboard, member directory, 10-role organization chart, announcements, events, photo/video media gallery, digital archive, officer admin panel, and backend-validated Clipper Room.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

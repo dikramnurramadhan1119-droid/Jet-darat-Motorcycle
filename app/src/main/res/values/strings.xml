@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">JDMC Digital HQ</string>
+    <string name="brand_full_name">JDMC DIGITAL HQ</string>
+    <string name="club_full_name">Jet Darat Motorcycle Club</string>
+    <string name="club_motto">Satu Jalan, Satu Mimpi, Satu Keluarga.</string>
+    <string name="brand_tagline">Official Mobile Headquarters • Satu Mimpi RP</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_club">Club</string>
+    <string name="nav_news">News</string>
+    <string name="nav_media">Media</string>
+    <string name="nav_clipper">Clipper</string>
+
+    <string name="backend_status_connected">Backend Connected</string>
+    <string name="backend_status_unconfigured">Backend Not Configured</string>
+    <string name="backend_status_unreachable">Backend Unreachable</string>
+    <string name="backend_configure_cta">Configure Backend</string>
+
+    <string name="backend_unavailable_title">Backend Validation Unavailable</string>
+    <string name="backend_unavailable_message">This Android client requires a live JDMC backend server for shared access code validation, rate limiting, session expiration, and remote clipper moderation. Security checks are never simulated on-device.</string>
+
+    <string name="access_gate_title">Clipper Room Access</string>
+    <string name="access_gate_subtitle">Enter the official shared JDMC Clipper Access Code. No personal accounts, emails, or passwords are used.</string>
+    <string name="access_code_label">Shared Clipper Access Code</string>
+    <string name="access_code_verify_cta">Verify Access Code</string>
+    <string name="access_session_active">Session Active</string>
+    <string name="access_logout_cta">Logout</string>
+
+    <string name="admin_gate_title">Remote Clipper Moderation</string>
+    <string name="admin_gate_subtitle">Restricted backend staff gate. The shared Clipper Access Code never grants administrator privileges.</string>
+    <string name="admin_key_label">Administrator Authorization Key</string>
+    <string name="admin_verify_cta">Authenticate Admin</string>
+    <string name="admin_logout_cta">End Admin Session</string>
+
+    <string name="gallery_title">Public Clipper Gallery</string>
+    <string name="gallery_subtitle">Approved &amp; published clips from the official JDMC community — open to everyone.</string>
+    <string name="watch_externally">Watch</string>
+    <string name="play_in_app">Play Clip</string>
+
+    <string name="error_invalid_url">Enter a valid HTTPS URL (https://...)</string>
+    <string name="error_required_field">This field is required</string>
+</resources>
